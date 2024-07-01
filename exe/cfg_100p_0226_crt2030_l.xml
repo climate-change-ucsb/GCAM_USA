@@ -5,7 +5,8 @@
 		<Value name="BatchFileName">batch_ag.xml</Value>
 		<Value name="policy-target-file">../input/policy/forcing_target_4p5.xml</Value>
 		<Value name="GHGInputFileName">../input/magicc/inputs/input_gases.emk</Value>
-		<Value write-output="1" append-scenario-name="0" name="xmldb-location">./db/crt2030_100p_w_learning_0226</Value>
+		<!-- Specifiy data output path -->
+		<Value write-output="1" append-scenario-name="0" name="xmldb-location">./db/crt2030_100p_w_learning_0226</Value> 
 		<Value write-output="1" append-scenario-name="0" name="restart">./restart/restart</Value>
 		<Value write-output="1" append-scenario-name="1" name="xmlDebugFileName">debug.xml</Value>
 		<Value write-output="1" append-scenario-name="0" name="climatFileName">gas.emk</Value>
@@ -306,13 +307,15 @@
 		<!--Value name = "dac">../input/gcamdata/xml/dac_ssp2.xml</Value-->
 		<Value name = "dac_usa">../input/gcamdata/xml/dac_USA_ssp2.xml</Value>
 
-        <!-- trajectory reduction in 2050, mainly change this part-->
+        <!-- trajectory reduction in 2050, mainly change this part--> 
+		<!-- change carbon cap per year--> 
 		<Value name = "USA_ghg_cap">../input/policy/GHG/US_GHG_crt_100p_hl_20240226_crt2030.xml</Value>
 		<Value name = "USA_ghg_link">../input/policy/GHG/GHG_link_energy_CO2_LUCdonly_alltimes_introduceCCS.xml</Value>
 
 	</ScenarioComponents>
 	<Strings>
-		<Value name="scenarioName">crt2030_100p_w_learning_0226</Value>
+		<!-- learning curve -->
+		<Value name="scenarioName">crt2030_100p_w_learning_0226</Value> 
 		<Value name="debug-region">MD</Value>
 		<Value name="MAGICC-input-dir">../input/magicc/inputs</Value>
 		<Value name="MAGICC-output-dir">../output</Value>
