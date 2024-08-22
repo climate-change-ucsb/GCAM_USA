@@ -1,0 +1,157 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jul 18 20:32:34 2024
+
+@author: haozheyang
+"""
+
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import xml.etree.ElementTree as ET
+import numpy as np
+import pandas as pd
+import random
+
+def pathGen(fn):
+    path = []
+    it = ET.iterparse(fn, events=('start', 'end'))
+    for evt, el in it:
+        if evt == 'start':
+            path.append(el.tag)
+            yield '/'.join(path)
+        else:
+            path.pop()
+            
+share_path='/Users/haozheyang/Documents/GCAM/gcam-v6.0-Mac-Release-Package/input/' 
+
+#%% case and stop year
+
+
+stop_year=2050
+
+#%%change file
+case_id=['China','US']
+case_number=2
+
+from input_function import itc_function
+
+itc_path=share_path + 'policy_base/itc_base.xml'
+itc_output_path=share_path+'policy_change/itc_change'
+
+itc_technology=[  
+                'PV_int',
+                'PV_peak',
+                'PV_subpeak',
+                'rooftop_pv',   
+                'wind_base',
+                'wind_base_offshore',  
+                'battery'
+                ]
+
+
+
+cost={
+      'China':[0.591932935, 0.591932935, 0.591932935, 0.673475896, 0.60089962, 1.09862825,0.902159847],
+      'US':   [0.669146268,0.669146268,0.669146268,0.937987888,0.769678019,1.151423718,1.021409428]
+      }
+#data
+model_year=np.arange(2020,2055,5)
+scenario={}
+
+# this is used for data simulation
+for i in case_id:
+    data=pd.DataFrame({
+        '2020': cost[i],
+        '2025': cost[i],
+        '2030': cost[i],
+        '2035': cost[i],
+        '2040': cost[i],
+        '2050': cost[i]
+        },
+        index=itc_technology)
+
+    scenario.update({str(i):data})
+
+#for pth in pathGen(share_path + itc_path):
+#    print(pth)
+
+itc_function(itc_path,itc_output_path,itc_technology,case_number,case_id, scenario, stop_year)
+
+       
+
+#%%car
+case_id=['China','Tax']
+case_number=2
+
+from input_function import car_function
+
+car_path = share_path + 'policy_base/transport_base.xml'
+car_output_path=share_path+'policy_change/car_change'
+
+car_technology={'supplysector': 'trn_pass_road_LDV_4W', 
+                'tranSubsector': 'Car',
+                'stub-technology':'BEV'}
+
+
+
+     
+cost_car={'China':[-0.0667],
+          'Tax': [0.0232116]}
+#data
+scenario_car={}
+
+# this is used for data simulation
+for i in case_id:
+    data_car=pd.DataFrame({
+        '2020': cost_car[i],
+        '2025': cost_car[i],
+        '2030': cost_car[i],
+        '2035': cost_car[i],
+        '2040': cost_car[i],
+        '2050': cost_car[i],
+        }
+        )
+
+    scenario_car.update({str(i):data_car})
+
+car_function(car_path,car_output_path,car_technology,case_number,case_id, scenario_car, stop_year)
+
+
+large_car_output_path=share_path+'policy_change/largecar_change'
+
+large_car_technology={'supplysector': 'trn_pass_road_LDV_4W', 
+                'tranSubsector': 'Large Car and Truck',
+                'stub-technology':'BEV'}
+
+cost_car={'China':[-0.224],
+          'Tax': [0.0350784]}
+#data
+scenario_large_car={}
+
+# this is used for data simulation
+for i in case_id:
+    data_large_car=pd.DataFrame({
+        '2020': cost_car[i],
+        '2025': cost_car[i],
+        '2030': cost_car[i],
+        '2035': cost_car[i],
+        '2040': cost_car[i],
+        '2050': cost_car[i],
+        }
+        )
+
+    scenario_large_car.update({str(i):data_large_car})
+
+car_function(car_path,large_car_output_path,large_car_technology,case_number,case_id, scenario_large_car, stop_year)
+
+    
+#%%    
+    
+    
+    
