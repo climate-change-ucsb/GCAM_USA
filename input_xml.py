@@ -120,7 +120,7 @@ case_id=['case_'+str(i) for i in range(1,case_number+1)]
 
 stop_year=2030
 
-#%%change file
+#%%change file this is template file with random numbers
 from input_function import itc_function
 
 itc_path=share_path + 'policy_base/itc_base.xml'

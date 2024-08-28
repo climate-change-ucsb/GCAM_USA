@@ -19,6 +19,7 @@ import pandas as pd
 import random
 import os
 
+# set path here
 os.chdir('/Users/hy4174/Documents/GitHub/GCAM_USA')
 
 
@@ -31,7 +32,8 @@ def pathGen(fn):
             yield '/'.join(path)
         else:
             path.pop()
-            
+
+#set your GCAM path here            
 share_path='/Users/hy4174/Documents/gcam-v6.0/input/' 
 
 
@@ -46,9 +48,11 @@ case_number=2
 
 from input_function import itc_function
 
+# itc output file path
 itc_path=share_path + 'policy_base/itc_base.xml'
 itc_output_path=share_path+'policy_change/itc_change'
 
+#technology you want to include
 itc_technology=[  
                 'PV_int',
                 'PV_peak',
@@ -59,7 +63,8 @@ itc_technology=[
                 'battery'
                 ]
 
-
+#relative cost change 
+# the cost change here corresponds to technology in itc_technology
 
 cost={
       'Onshore':[1.08, 1.08, 1.08, 1.04, 1.03, 1, 1],
@@ -106,6 +111,7 @@ car_technology={'supplysector': 'trn_pass_road_LDV_4W',
 
 
 
+# relative change in the non-energy input for car
      
 cost_car={'Onshore': {'2020': [0.2668*0.05],
                     '2025': [0.2456*0.05],
