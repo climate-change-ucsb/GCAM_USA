@@ -17,6 +17,10 @@ import xml.etree.ElementTree as ET
 import numpy as np
 import pandas as pd
 import random
+import os
+
+os.chdir('/Users/hy4174/Documents/GitHub/GCAM_USA')
+
 
 def pathGen(fn):
     path = []
@@ -28,15 +32,16 @@ def pathGen(fn):
         else:
             path.pop()
             
-share_path='/Users/haozheyang/Documents/GCAM/gcam-v6.0-Mac-Release-Package/input/' 
+share_path='/Users/hy4174/Documents/gcam-v6.0/input/' 
+
 
 #%% case and stop year
 
 
-stop_year=2050
+stop_year=2030
 
 #%%change file
-case_id=['China','US']
+case_id=['Onshore','Tariff']
 case_number=2
 
 from input_function import itc_function
@@ -57,9 +62,10 @@ itc_technology=[
 
 
 cost={
-      'China':[0.591932935, 0.591932935, 0.591932935, 0.673475896, 0.60089962, 1.09862825,0.902159847],
-      'US':   [0.669146268,0.669146268,0.669146268,0.937987888,0.769678019,1.151423718,1.021409428]
+      'Onshore':[1.08, 1.08, 1.08, 1.04, 1.03, 1, 1],
+      'Tariff':   [1.09,1.09,1.09,1.05,1.01, 1, 1]
       }
+
 #data
 model_year=np.arange(2020,2055,5)
 scenario={}
@@ -86,7 +92,7 @@ itc_function(itc_path,itc_output_path,itc_technology,case_number,case_id, scenar
        
 
 #%%car
-case_id=['China','Tax']
+case_id=['Onshore','Tariff']
 case_number=2
 
 from input_function import car_function
@@ -101,20 +107,37 @@ car_technology={'supplysector': 'trn_pass_road_LDV_4W',
 
 
      
-cost_car={'China':[-0.0667],
-          'Tax': [0.0232116]}
+cost_car={'Onshore': {'2020': [0.2668*0.05],
+                    '2025': [0.2456*0.05],
+                    '2030': [0.2243*0.05],
+                    '2035': [0.2243*0.05],
+                    '2040': [0.2243*0.05],
+                    '2045': [0.2243*0.05],
+                    '2050': [0.2243*0.05],
+                    },
+          'Tariff': {'2020': [0.2668*0.05],
+                     '2025': [0.2456*0.05],
+                     '2030': [0.2243*0.05],
+                     '2035': [0.2243*0.05],
+                     '2040': [0.2243*0.05],
+                     '2045': [0.2243*0.05],
+                     '2050': [0.2243*0.05]
+                     }
+          }
 #data
 scenario_car={}
 
 # this is used for data simulation
 for i in case_id:
-    data_car=pd.DataFrame({
-        '2020': cost_car[i],
-        '2025': cost_car[i],
-        '2030': cost_car[i],
-        '2035': cost_car[i],
-        '2040': cost_car[i],
-        '2050': cost_car[i],
+    data_car=pd.DataFrame(
+        {
+        '2020': cost_car[i]['2020'],
+        '2025': cost_car[i]['2025'],
+        '2030': cost_car[i]['2030'],
+        '2035': cost_car[i]['2035'],
+        '2040': cost_car[i]['2040'],
+        '2045': cost_car[i]['2045'],
+        '2050': cost_car[i]['2050']
         }
         )
 
@@ -129,20 +152,36 @@ large_car_technology={'supplysector': 'trn_pass_road_LDV_4W',
                 'tranSubsector': 'Large Car and Truck',
                 'stub-technology':'BEV'}
 
-cost_car={'China':[-0.224],
-          'Tax': [0.0350784]}
+cost_car={'Onshore': {'2020': [0.4032*0.05],
+                    '2025': [0.3718*0.05],
+                    '2030': [0.3404*0.05],
+                    '2035': [0.3404*0.05],
+                    '2040': [0.3404*0.05],
+                    '2045': [0.3404*0.05],
+                    '2050': [0.3404*0.05]
+                    },
+          'Tariff': {'2020': [0.3404*0.05],
+                     '2025': [0.3404*0.05],
+                     '2030': [0.3404*0.05],
+                     '2035': [0.3404*0.05],
+                     '2040': [0.3404*0.05],
+                     '2045': [0.23404*0.05],
+                     '2050': [0.3404*0.05]
+                     }
+          }
 #data
 scenario_large_car={}
 
 # this is used for data simulation
 for i in case_id:
     data_large_car=pd.DataFrame({
-        '2020': cost_car[i],
-        '2025': cost_car[i],
-        '2030': cost_car[i],
-        '2035': cost_car[i],
-        '2040': cost_car[i],
-        '2050': cost_car[i],
+        '2020': cost_car[i]['2020'],
+        '2025': cost_car[i]['2025'],
+        '2030': cost_car[i]['2030'],
+        '2035': cost_car[i]['2035'],
+        '2040': cost_car[i]['2040'],
+        '2045': cost_car[i]['2045'],
+        '2050': cost_car[i]['2050']
         }
         )
 

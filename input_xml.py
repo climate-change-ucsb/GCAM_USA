@@ -28,9 +28,9 @@ def pathGen(fn):
         else:
             path.pop()
             
-share_path='/Users/haozheyang/Documents/GCAM/gcam-v6.0-Mac-Release-Package/input/' 
+share_path='/Users/hy4174/Documents/gcam-v6.0/input/' 
 #%% itc base file generation
-'''
+
 itc_base_path='gcamdata/xml/elec_segments_water_USA.xml'
 #base file
 tree_itc_base = ET.parse(share_path + itc_base_path)
@@ -112,7 +112,7 @@ for supplysector in root_transport_base.findall('.//supplysector'):
                             
 tree_transport_base.write(share_path + "policy_base/transport_base.xml") 
 
-'''
+#%% change file
 #%% case and stop year
 case_number=1
 
