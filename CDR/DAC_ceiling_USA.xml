@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?><scenario>
+    <world>
+        <region name="USA">
+            <ghgpolicy name="CDR_ceiling">
+                <market>USA</market>
+                <constraint year="2020">0</constraint>
+                <constraint year="2025">0</constraint>
+                <constraint year="2030">0</constraint>
+                <constraint year="2035">0</constraint>
+                <constraint year="2040">0</constraint>
+                <constraint year="2045">0</constraint>
+                <constraint year="2050">0</constraint>
+            </ghgpolicy>
+        </region>
+      <region name="AK">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="AL">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="AR">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="AZ">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="CA">
+         <ghgpolicy name="CDR_ceiling">
+		<constraint year="2020">0</constraint>
+                <constraint year="2025">0</constraint>
+                <constraint year="2030">0</constraint>
+                <constraint year="2035">0</constraint>
+                <constraint year="2040">0</constraint>
+                <constraint year="2045">0</constraint>
+                <constraint year="2050">0</constraint>
+            <market>USA</market>
+         </ghgpolicy>
+      </region>    
+      <region name="CO">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="CT">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="DC">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="DE">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="FL">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="GA">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="HI">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="IA">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="ID">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="IL">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="IN">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="KS">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="KY">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="LA">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MA">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MD">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="ME">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MI">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MN">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MO">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MS">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MT">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NC">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="ND">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NE">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NH">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NJ">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NM">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NV">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NY">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="OH">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="OK">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="OR">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="PA">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="RI">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="SC">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="SD">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="TN">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="TX">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="UT">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="VA">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="VT">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="WA">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="WI">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="WV">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="WY">
+         <ghgpolicy name="CDR_ceiling">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+    </world>
+</scenario>

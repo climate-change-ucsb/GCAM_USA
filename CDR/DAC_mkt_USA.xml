@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><scenario>
+    <world>
+        <global-technology-database>
+            <location-info sector-name="CO2 removal" subsector-name="dac" nocreate="1">
+                    <technology name="hightemp DAC NG" nocreate="1">
+                        <period year="2020">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2025">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2030">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2035">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2040">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2045">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2050">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                    </technology>
+		      <technology name="hightemp DAC elec" nocreate="1">
+                        <period year="2020">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2025">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2030">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2035">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2040">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2045">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2050">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                    </technology>
+		      <technology name="lowtemp DAC heatpump" nocreate="1">
+                        <period year="2020">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2025">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2030">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2035">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2040">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2045">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                        <period year="2050">
+                            <Non-CO2 name="CDR">
+                                <emiss-coef>3.67</emiss-coef>
+                                <output-driver/>
+                            </Non-CO2>
+                        </period>
+                    </technology>      
+            </location-info>
+        </global-technology-database>
+    </world>
+</scenario>
