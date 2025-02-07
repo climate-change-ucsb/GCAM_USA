@@ -86,3 +86,16 @@ power_constraint_function(share_power_path,share_output_path, output_name, stop_
 share_power_path=share_path + 'policy_base/constraint_all_base.xml'
 output_name = "constraint_all_power.xml"
 power_constraint_function(share_power_path,share_output_path, output_name, stop_year)
+
+output_name = "constraint_power.xml"
+share_power_path=share_path + 'policy_base/power_constraint_base.xml'
+share_output_path=share_path+'policy_change/'
+
+#%%
+from input_function import ghg_link_function
+
+link_input_path ='/Users/hy4174/Documents/gcam-v6.0/input/policy/paper2/GHG_link_energy_CO2_LUCdonly_alltimes_introduceCCS.xml'
+link_output_path ='/Users/hy4174/Documents/gcam-v6.0/input/policy/paper2/'
+output_link_name = "GHG_link_energy_power.xml"
+
+

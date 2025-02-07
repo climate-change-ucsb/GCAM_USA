@@ -358,6 +358,17 @@ def power_constraint_function(share_power_path,share_output_path, output_name, s
         for sector in list(technology):
             if "biomass" in sector.attrib['subsector-name']:
                 continue
+            elif "CCS" in sector.attrib['subsector-name']:
+                for parent in sector.findall('.//period/..'):
+                    for period in list(parent):
+                        capture_component= ET.SubElement(period,'standard-capture-component')                        
+                        target_gas = ET.SubElement(capture_component,'target-gas')
+                        target_gas.text = "CO2_power"
+                        
+                        for sub_parent in parent.findall('.//CO2/..'):
+                            for CO2 in list(sub_parent):
+                                if CO2.tag == "CO2":
+                                    CO2.attrib['name'] = "CO2_power"
             else:
                 for parent in sector.findall('.//CO2/..'):
                     for CO2 in list(parent):
@@ -365,4 +376,66 @@ def power_constraint_function(share_power_path,share_output_path, output_name, s
             
     tree_power.write(share_output_path + output_name,encoding="UTF-8",xml_declaration=True)     
             
+def power_constraint_usa_function(share_power_path,share_output_path, output_name, stop_year):
+     
+    tree_power = ET.parse(share_power_path)
+    root_power = tree_power.getroot()
+    for technology in root_power.findall('.//subsector/..'):
+        for sector in list(technology):
+            if "biomass" in sector.attrib['name']:
+                continue
+            else:
+                for parent in sector.findall('.//period/..'):
+                    for period in list(parent): 
+                        CO2 = ET.SubElement(period,'CO2')
+                        CO2.attrib['name'] = "CO2_power"
+            
+    tree_power.write(share_output_path + output_name,encoding="UTF-8",xml_declaration=True)     
+            
+                     
+            
+def ghg_link_function(link_input_path,link_output_path,output_link_name,stop_year):
+    tree_link = ET.parse(link_input_path)
+    root_link = tree_link.getroot()
+    for root in root_link.findall('.//region/..'):
+        for region in list(root):
+            if region.findall(".//*[.='USA']"):
+                policy = ET.SubElement(region,'linked-ghg-policy')
+                policy.attrib['name'] = "CO2_power"
+                
+                price_adjust = ET.SubElement(policy,'price-adjust')
+                price_adjust.attrib['fillout'] = "1"
+                price_adjust.attrib['year'] = "1975"
+                price_adjust.text = "0"
+                    
+                demand_adjust = ET.SubElement(policy,'demand-adjust')
+                demand_adjust.attrib['fillout'] = "1"
+                demand_adjust.attrib['year'] = "1975"
+                demand_adjust.text = "0"
+                
+                market = ET.SubElement(policy,'market')
+                market.text = "USA"
+                
+                GHG = ET.SubElement(policy,'linked-policy')
+                GHG.text = "GHG"            
+                
+                price = ET.SubElement(policy,'price-unit')
+                price.text = "1990$ /tC"  
+                
+                output = ET.SubElement(policy,'output-unit')
+                output.text = "MtC"  
+                
+                price_adjust = ET.SubElement(policy,'price-adjust')
+                price_adjust.attrib['fillout'] = "1"
+                price_adjust.attrib['year'] = "2025"
+                price_adjust.text = "1"
+                
+                demand_adjust = ET.SubElement(policy,'demand-adjust')
+                demand_adjust.attrib['fillout'] = "1"
+                demand_adjust.attrib['year'] = "2025"
+                demand_adjust.text = "3.666666667"
+            else:
+                continue
+            
+    tree_link.write(link_output_path + output_link_name,encoding="UTF-8",xml_declaration=True)
             

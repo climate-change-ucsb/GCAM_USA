@@ -177,6 +177,43 @@ for parent in root_cost_base.findall('.//period/..'):
         
     
 tree_cost_base.write(share_path + "policy_base/constraint_all_base.xml") 
+#%% tree USA
+share_base_path='gcamdata/xml/elec_segments_water_USA.xml'
+tree_share_base = ET.parse(share_path + share_base_path)
+root_share_base = tree_share_base.getroot()
+
+for parent in root_share_base.findall('.//region/..'):
+    for region in list(parent):  #getchildren() will be depreciated after python 3.9 
+        if (region.tag =='global-technology-database'):
+            parent.remove(region)
+        elif (region.attrib['name'] =='USA') | ('grid' in region.attrib['name']):
+            parent.remove(region)
+
+for parent2 in root_share_base.findall('.//nesting-subsector/..'):
+    for child2 in list(parent2):
+        if child2.tag!="nesting-subsector":
+            parent2.remove(child2)
+        for grand2 in list(child2):
+            if grand2.tag != "subsector":
+                child2.remove(grand2)
+
+    #print(tech.attrib)
+
+for parent3 in root_share_base.findall('.//subsector/stub-technology/..'):
+    for child3 in list(parent3):
+        #print(child.tag)
+        if child3.tag != 'stub-technology':
+            parent3.remove(child3)
+        elif child3.tag =="stub-technology":
+            for grand in list(child3):
+                if grand.tag !="period":
+                    child3.remove(grand)
+                else:
+                    for period in list(grand):
+                        grand.remove(period)
+                
+            
+tree_share_base.write(share_path + "policy_base/power_constraint_base.xml") 
 
 
 #%% CCS share weight
@@ -291,7 +328,32 @@ for tech in root_share_h2_base.findall('.//subsector/..'):
             tech.remove(subsector)
 '''        
 tree_share_h2_base.write(share_path + "policy_base/H2_share_base.xml") 
-            
+
+#%%
+share_base_path='gcamdata/xml/en_distribution.xml'
+tree_share_base = ET.parse(share_path + share_base_path)
+root_share_base = tree_share_base.getroot()
+
+for parent in root_share_base.findall('.//region/..'):
+    for region in list(parent):  #getchildren() will be depreciated after python 3.9 
+        if (region.tag =='global-technology-database'):
+            parent.remove(region)
+        elif (region.attrib['name'] !='USA'):
+            parent.remove(region)
+        else:
+            for supplysector in list(region):
+                if supplysector.attrib['name'] != 'backup_electricity':
+                    region.remove(supplysector)
+                else:
+                    for sub in list(supplysector):
+                        if sub.tag!="subsector":
+                            supplysector.remove(sub)
+                        else:
+                            for tech in list(sub):
+                                if tech.tag!= 'stub-technology':
+                                    sub.remove(tech)
+tree_share_base.write(share_path + "policy_base/en_USA_base.xml") 
+ 
 #%% biomass constraint
 share_biomass_path='gcamdata/xml/regional_biomass_USA.xml'
 tree_share_biomass = ET.parse(share_path + share_biomass_path)
