@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><scenario>
+    <world>
+        <region name="USA">
+            <linked-ghg-policy name="BECCS">
+                <price-adjust fillout="1" year="1975">0</price-adjust>
+                <demand-adjust fillout="1" year="1975">0</demand-adjust>
+                <market>USA</market>
+                <linked-policy>BECCS_ceiling</linked-policy>
+                <price-unit>1990$/tCO2</price-unit>
+                <output-unit>MTCO2</output-unit>
+                <price-adjust fillout="1" year="2020">1</price-adjust>
+                <demand-adjust fillout="1" year="2020">1</demand-adjust>
+            </linked-ghg-policy>
+        </region>
+    </world>
+</scenario>

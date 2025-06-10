@@ -43,7 +43,7 @@ share_path='/Users/hy4174/Documents/gcam-v6.0/input/'
 stop_year=2050
 
 #%%change file
-case_id=['Tariff_short','Tariff_long','Tariff_current','Tariff_shock']
+case_id=['Tariff_wide','Tariff_current','Tariff_chaos','Onshore','Onshore_supply','Onshore_chaos','Onshore_random','Free','REF_chaos']
 case_number=len(case_id)
 #%%
 from input_function import itc_function, capital_function

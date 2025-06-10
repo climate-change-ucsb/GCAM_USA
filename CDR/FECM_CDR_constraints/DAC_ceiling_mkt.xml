@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name = "USA">
+         <supplysector name = "CO2 removal">
+            <subsector name = "dac">
+               <stub-technology name = "hightemp DAC NG">
+                  <period year = "2015">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2020">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2025">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2030">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2035">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2040">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2045">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2050">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+               </stub-technology>
+               <stub-technology name = "hightemp DAC elec">
+                  <period year = "2015">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2020">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2025">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2030">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2035">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2040">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2045">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2050">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+               </stub-technology>
+               <stub-technology name = "lowtemp DAC heatpump">
+                  <period year = "2015">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2020">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2025">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2030">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2035">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2040">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2045">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+                  <period year = "2050">
+                     <input-tax name = "DAC-ceiling"/>
+                  </period>
+               </stub-technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

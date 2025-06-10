@@ -49,7 +49,7 @@ data_model = model.create_instance(data)
 
 data_model.pprint()
 
-opt = SolverFactory('cbc')
+opt = SolverFactory('gurobi')
 opt.solve(data_model) 
 
 

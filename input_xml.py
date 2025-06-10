@@ -31,7 +31,7 @@ def pathGen(fn):
 share_path='/Users/hy4174/Documents/gcam-v6.0/input/' 
 #%% itc base file generation
 
-itc_base_path='gcamdata/xml/elec_segments_water_USA.xml'
+itc_base_path='gcamdata/xml/elec_segments_water_USA_new.xml'
 #base file
 tree_itc_base = ET.parse(share_path + itc_base_path)
 root_itc_base = tree_itc_base.getroot()
@@ -93,32 +93,6 @@ for parent in root_cost_base.findall('.//input-capital/..'):
                     child.remove(grand)
         
     
-tree_cost_base.write(share_path + "policy_base/cost_base.xml") 
-
-#%%
-for parent in root_cost_base.findall('.//region/..'):
-    for region in list(parent):  #getchildren() will be depreciated after python 3.9 
-        if region.tag!='global-technology-database':
-            parent.remove(region)
-
-
-for tech in root_cost_base.findall('.//period/..'):
-    #print(tech.attrib)
-    for period in tech.findall('period'):        
-        if int(period.get('year')) < 2025:
-            tech.remove(period)
-
-            
-for parent in root_cost_base.findall('.//input-capital/..'):
-    for child in list(parent):
-        #print(child.tag)
-        if child.tag != 'input-capital':
-            parent.remove(child)
-        else:
-            for grand in list(child):
-                if grand.tag!='capital-overnight':
-                    child.remove(grand)
-        
     
 tree_cost_base.write(share_path + "policy_base/cost_base.xml") 
 

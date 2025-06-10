@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <policy-portfolio-standard name="DAC-ceiling">
+            <market>USA</market>
+            <policyType>tax</policyType>
+            <constraint year="2020">0</constraint>
+            <constraint year="2025">13.636</constraint>
+            <constraint year="2030">27.273</constraint>
+            <constraint year="2035">40.909</constraint>
+            <constraint year="2040">54.545</constraint>
+            <constraint year="2045">68.182</constraint>
+            <constraint year="2050">81.818</constraint>
+         </policy-portfolio-standard>
+      </region>
+   </world>
+</scenario>

@@ -6,6 +6,7 @@ Created on Sun Jul 21 20:22:46 2024
 @author: haozheyang
 """
 import xml.etree.ElementTree as ET
+import numpy as np
 
 def capital_function(capital_path,capital_output_path,case_number,case_id, scenario, stop_year):
 
@@ -319,16 +320,11 @@ def constraint_en_function(share_en_path,share_en_output_path, output_en_name, s
         if parent.attrib['name'] == "USA":
             root_share.remove(parent)
         if parent.tag == "global-technology-database":
-            root_share.remove(parent)
+            root_share.remove(parent)       
         else: 
-            policy = ET.SubElement(parent,'policy-portfolio-standard')
-            policy.attrib['name'] = "bio-constraint"
-            market = ET.SubElement(policy,'market')
-            market.text = 'USA'
-            policytype = ET.SubElement(policy,'policyType')
-            policytype.text = 'tax'
             for technology_parent in list(parent):
-                if technology_parent.attrib['name'] in ['biomass liquids']:
+                if (technology_parent.attrib['name'] in ['oil refining']) & (technology_parent.tag =="pass-through-sector"):
+                    technology_parent.tag = "supplysector"
                     for subsector in list(technology_parent):  
                         if subsector.tag not in ["subsector",]:
                             technology_parent.remove(subsector)
@@ -338,16 +334,15 @@ def constraint_en_function(share_en_path,share_en_output_path, output_en_name, s
                                     subsector.remove(tech) 
                                 else:
                                     for period in list(tech):
+                                        for input_name in list(period):
+                                            period.remove(input_name)
                                         if int(period.attrib['year']) < 2055:
                                             new_element = ET.SubElement(period,'input-tax')
-                                            new_element.attrib['name'] = "bio-constraint" 
-                                            
-                elif technology_parent.tag in ['policy-portfolio-standard']:
-                    continue
+                                            new_element.attrib['name'] = "oil-ceiling"                                             
                 else:
                     parent.remove(technology_parent)
                     
-    tree_share.write(share_en_output_path + 'en_constraint.xml',encoding="UTF-8",xml_declaration=True)     
+    tree_share.write(share_en_output_path + output_en_name,encoding="UTF-8",xml_declaration=True)     
     
     
 def power_constraint_function(share_power_path,share_output_path, output_name, stop_year):
@@ -357,7 +352,15 @@ def power_constraint_function(share_power_path,share_output_path, output_name, s
     for technology in root_power.findall('.//location-info/..'):
         for sector in list(technology):
             if "biomass" in sector.attrib['subsector-name']:
-                continue
+                for CO2 in sector.findall('.//CO2'):
+                    CO2.attrib['name'] = "CO2_USA"
+                if 'CCS' in sector.attrib['subsector-name']:
+                    for parent in sector.findall('.//period/..'):
+                        for period in list(parent):
+                            capture_component= ET.SubElement(period,'standard-capture-component')                        
+                            target_gas = ET.SubElement(capture_component,'target-gas')
+                            target_gas.text = "CO2_USA"
+                
             elif "CCS" in sector.attrib['subsector-name']:
                 for parent in sector.findall('.//period/..'):
                     for period in list(parent):
@@ -374,12 +377,43 @@ def power_constraint_function(share_power_path,share_output_path, output_name, s
                     for CO2 in list(parent):
                         CO2.attrib['name'] = "CO2_power"
             
-    tree_power.write(share_output_path + output_name,encoding="UTF-8",xml_declaration=True)     
+    tree_power.write(share_output_path + output_name,encoding="UTF-8",xml_declaration=True)    
+    
+    
+def power_constraint_origin_function(origin_power_path,share_output_path, output_name, stop_year):
+     
+    tree_power = ET.parse(origin_power_path)
+    root_power = tree_power.getroot()
+                        
+    for technology in root_power.findall('.//subsector/stub-technology/period/..'):
+        for period in list(technology):
+            if period.tag=="period":
+                CO2 = ET.SubElement(period,'CO2')
+                CO2.attrib['name'] = "CO2_power"
+        if "biomass" in technology.attrib['name']:
+            for CO2 in technology.findall('.//CO2'):
+                CO2.attrib['name'] = "CO2_USA"
+            if 'CCS' in technology.attrib['name']:
+                for period in technology.findall('.//period'):                    
+                    capture_component= ET.SubElement(period,'standard-capture-component')                        
+                    target_gas = ET.SubElement(capture_component,'target-gas')
+                    target_gas.text = "CO2_USA"
+        elif "CCS" in technology.attrib['name']:
+             for period in technology.findall('.//period'):
+                    capture_component= ET.SubElement(period,'standard-capture-component')                        
+                    target_gas = ET.SubElement(capture_component,'target-gas')
+                    target_gas.text = "CO2_power"
+
+            
+    tree_power.write(share_output_path + output_name,encoding="UTF-8",xml_declaration=True)  
+    
             
 def power_constraint_usa_function(share_power_path,share_output_path, output_name, stop_year):
      
     tree_power = ET.parse(share_power_path)
     root_power = tree_power.getroot()
+    for supply_sector in root_power.findall('.//pass-through-sector'):
+        supply_sector.tag="supplysector"
     for technology in root_power.findall('.//subsector/..'):
         for sector in list(technology):
             if "biomass" in sector.attrib['name']:
@@ -397,11 +431,12 @@ def power_constraint_usa_function(share_power_path,share_output_path, output_nam
 def ghg_link_function(link_input_path,link_output_path,output_link_name,stop_year):
     tree_link = ET.parse(link_input_path)
     root_link = tree_link.getroot()
+    '''
     for root in root_link.findall('.//region/..'):
         for region in list(root):
             if region.findall(".//*[.='USA']"):
                 policy = ET.SubElement(region,'linked-ghg-policy')
-                policy.attrib['name'] = "CO2_power"
+                policy.attrib['name'] = "CO2_power_link"
                 
                 price_adjust = ET.SubElement(policy,'price-adjust')
                 price_adjust.attrib['fillout'] = "1"
@@ -415,6 +450,9 @@ def ghg_link_function(link_input_path,link_output_path,output_link_name,stop_yea
                 
                 market = ET.SubElement(policy,'market')
                 market.text = "USA"
+                
+                policy_name = ET.SubElement(policy,'policy-name')
+                policy_name.text = "CO2_power"                
                 
                 GHG = ET.SubElement(policy,'linked-policy')
                 GHG.text = "GHG"            
@@ -434,8 +472,338 @@ def ghg_link_function(link_input_path,link_output_path,output_link_name,stop_yea
                 demand_adjust.attrib['fillout'] = "1"
                 demand_adjust.attrib['year'] = "2025"
                 demand_adjust.text = "3.666666667"
+                
+                
+                policy2 = ET.SubElement(region,'linked-ghg-policy')
+                policy2.attrib['name'] = "CO2_transport_link"
+                
+                price_adjust2 = ET.SubElement(policy2,'price-adjust')
+                price_adjust2.attrib['fillout'] = "1"
+                price_adjust2.attrib['year'] = "1975"
+                price_adjust2.text = "0"
+                    
+                demand_adjust2 = ET.SubElement(policy2,'demand-adjust')
+                demand_adjust2.attrib['fillout'] = "1"
+                demand_adjust2.attrib['year'] = "1975"
+                demand_adjust2.text = "0"
+                
+                market2 = ET.SubElement(policy2,'market')
+                market2.text = "USA"
+                
+                policy_name2 = ET.SubElement(policy2,'policy-name')
+                policy_name2.text = "CO2_transport"                
+                
+                GHG2 = ET.SubElement(policy2,'linked-policy')
+                GHG2.text = "GHG"            
+                
+                price2 = ET.SubElement(policy2,'price-unit')
+                price2.text = "1990$ /tC"  
+                
+                output2 = ET.SubElement(policy2,'output-unit')
+                output2.text = "MtC"  
+                
+                price_adjust2 = ET.SubElement(policy2,'price-adjust')
+                price_adjust2.attrib['fillout'] = "1"
+                price_adjust2.attrib['year'] = "2025"
+                price_adjust2.text = "1"
+                
+                demand_adjust2 = ET.SubElement(policy2,'demand-adjust')
+                demand_adjust2.attrib['fillout'] = "1"
+                demand_adjust2.attrib['year'] = "2025"
+                demand_adjust2.text = "3.666666667"
+                
             else:
                 continue
+    '''
+            
+    for ghg_policy in root_link.findall(".//*[.='USA']/.."):
+        if ghg_policy.attrib['name'] == 'CO2':
+           ghg_policy.attrib['name'] = 'CO2_USA'
+    for root in root_link.findall('.//region/..'):
+        for region in list(root):
+            if region.findall(".//*[.='USA']"):
+              policy2 = ET.SubElement(region,'linked-ghg-policy')
+              policy2.attrib['name'] = "CO2_USA_BECCS"
+              
+              price_adjust2 = ET.SubElement(policy2,'price-adjust')
+              price_adjust2.attrib['fillout'] = "1"
+              price_adjust2.attrib['year'] = "1975"
+              price_adjust2.text = "0"
+                  
+              demand_adjust2 = ET.SubElement(policy2,'demand-adjust')
+              demand_adjust2.attrib['fillout'] = "1"
+              demand_adjust2.attrib['year'] = "1975"
+              demand_adjust2.text = "0"
+              
+              market2 = ET.SubElement(policy2,'market')
+              market2.text = "USA"
+              
+              #policy_name2 = ET.SubElement(policy2,'policy-name')
+              #policy_name2.text = "CO2_transport"                
+              
+              GHG2 = ET.SubElement(policy2,'linked-policy')
+              GHG2.text = "GHG"            
+              
+              price2 = ET.SubElement(policy2,'price-unit')
+              price2.text = "1990$ /tC"  
+              
+              output2 = ET.SubElement(policy2,'output-unit')
+              output2.text = "MtC"  
+              
+              price_adjust2 = ET.SubElement(policy2,'price-adjust')
+              price_adjust2.attrib['fillout'] = "1"
+              price_adjust2.attrib['year'] = "2025"
+              price_adjust2.text = "1"
+              
+              demand_adjust2 = ET.SubElement(policy2,'demand-adjust')
+              demand_adjust2.attrib['fillout'] = "1"
+              demand_adjust2.attrib['year'] = "2025"
+              demand_adjust2.text = "1"
             
     tree_link.write(link_output_path + output_link_name,encoding="UTF-8",xml_declaration=True)
+     
+
+
+def en_CO2_function(en_transformation_path,share_output_path, en_output_name, stop_year):
+    tree_share = ET.parse(en_transformation_path)
+    root_share = tree_share.getroot()
             
+    for CO2 in root_share.findall(".//subsector[@name!='biomass liquids']/pass-through-technology//CO2"):
+        CO2.attrib['name']='CO2_USA'
+        
+    for CO2 in root_share.findall(".//subsector[@name='oil refining']//pass-through-technology//CO2"):
+        CO2.attrib['name']='CO2_USA'
+        
+    for period in root_share.findall(".//pass-through-sector[@name!='biomass liquids']//stub-technology/period"):
+        CO2 = ET.SubElement(period,'CO2')
+        CO2.attrib['name'] = "CO2_USA"
+
+    for CO2 in root_share.findall(".//subsector[@name='oil refining']//stub-technology/period/CO2"):
+        CO2.attrib['name'] = "CO2_USA"
+        
+    for technology in root_share.findall(".//pass-through-sector[@name!='biomass liquids']//stub-technology"):
+        if "CCS" in technology.attrib['name'] :
+            for period in technology.findall('.//period'):
+                capture_component= ET.SubElement(period,'standard-capture-component')                        
+                target_gas = ET.SubElement(capture_component,'target-gas')
+                target_gas.text = "CO2_USA" 
+
+    tree_share.write(share_output_path + en_output_name,encoding="UTF-8",xml_declaration=True)     
+
+def en_all_CO2_function(en_all_transformation_path,share_output_path, en_all_output_name, stop_year):
+    tree_share = ET.parse(en_all_transformation_path)
+    root_share = tree_share.getroot()
+                  
+    for technology in root_share.findall(".//region[@name='USA']/supplysector[@name='gas processing']/subsector[@name!='biomass gasification']/stub-technology"):
+        for year in np.arange(2020,2055,5):
+                period_year = ET.SubElement(technology,'period')
+                period_year.attrib['year'] = str(year)
+                CO2 = ET.SubElement(period_year,'CO2')
+                CO2.attrib['name'] = "CO2_USA"
+
+    tree_share.write(share_output_path + en_all_output_name,encoding="UTF-8",xml_declaration=True)     
+    
+    
+def transport_CO2_function(trans_path,share_output_path,trans_output_name, stop_year):
+    
+       tree_share = ET.parse(trans_path)
+       root_share = tree_share.getroot()
+               
+       for period in root_share.findall('.//stub-technology/period'):
+            CO2 = ET.SubElement(period,'CO2')
+            CO2.attrib['name'] = "CO2_USA"
+       for CO2 in root_share.findall(".//stub-technology[@name='Liquids']/period/CO2"):
+            CO2.attrib['name'] = "CO2_transport"
+
+       for CO2 in root_share.findall(".//stub-technology[@name='Hybrid Liquids']/period/CO2"):
+            CO2.attrib['name'] = "CO2_transport" 
+       tree_share.write(share_output_path + trans_output_name,encoding="UTF-8",xml_declaration=True)     
+
+
+def building_CO2_function(building_path,share_output_path,building_output_name, stop_year):
+    
+       tree_share = ET.parse(building_path)
+       root_share = tree_share.getroot()
+               
+       for period in root_share.findall('.//stub-technology/period'):
+            CO2 = ET.SubElement(period,'CO2')
+            CO2.attrib['name'] = "CO2_USA"
+       
+       tree_share.write(share_output_path + building_output_name,encoding="UTF-8",xml_declaration=True)  
+       
+def industry_CO2_function(industry_path,share_output_path, industry_output_name, stop_year):
+    
+       tree_share = ET.parse(industry_path)
+       root_share = tree_share.getroot()
+               
+       for period in root_share.findall('.//stub-technology/period'):
+            CO2 = ET.SubElement(period,'CO2')
+            CO2.attrib['name'] = "CO2_USA"
+            
+       for period in root_share.findall(".//supplysector[@name='other industrial feedstocks']//stub-technology/period"):   
+            non_capture_component = ET.SubElement(period,'non-energy-use-capture-component')
+            target_gas = ET.SubElement(non_capture_component,'target-gas')
+            target_gas.text = "CO2_USA"
+            
+       
+       tree_share.write(share_output_path + industry_output_name,encoding="UTF-8",xml_declaration=True)         
+
+def cement_CO2_function(cement_path,share_output_path, cement_output_name, stop_year):
+    tree_share = ET.parse(cement_path)
+    root_share = tree_share.getroot()
+            
+    for technology in root_share.findall('.//stub-technology'):
+        if "CCS" in technology.attrib['name'] :
+            for period in technology.findall('.//period'):
+                capture_component= ET.SubElement(period,'standard-capture-component')                        
+                target_gas = ET.SubElement(capture_component,'target-gas')
+                target_gas.text = "CO2_USA" 
+     
+    for period in root_share.findall('.//stub-technology/period'):
+        CO2 = ET.SubElement(period,'CO2')
+        CO2.attrib['name'] = "CO2_USA"
+                    
+    tree_share.write(share_output_path + cement_output_name,encoding="UTF-8",xml_declaration=True)  
+    
+    
+def H2_CO2_function(H2_path,share_output_path, H2_output_name, stop_year):
+    tree_share = ET.parse(H2_path)
+    root_share = tree_share.getroot()
+                
+    for period in root_share.findall(".//subsector[@name!='biomass']//stub-technology/period"):
+        CO2 = ET.SubElement(period,'CO2')
+        CO2.attrib['name'] = "CO2_USA"
+        
+    for technology in root_share.findall(".//subsector[@name!='biomass']//stub-technology"):
+        if "CCS" in technology.attrib['name'] :
+            for period in technology.findall('.//period'):
+                capture_component= ET.SubElement(period,'standard-capture-component')                        
+                target_gas = ET.SubElement(capture_component,'target-gas')
+                target_gas.text = "CO2_USA"
+                    
+    tree_share.write(share_output_path + H2_output_name,encoding="UTF-8",xml_declaration=True) 
+    
+def fert_CO2_function(fert_path,share_output_path, fert_output_name, stop_year):
+    tree_share = ET.parse(fert_path)
+    root_share = tree_share.getroot()
+            
+    for technology in root_share.findall('.//stub-technology'):
+        if "CCS" in technology.attrib['name'] :
+            for period in technology.findall('.//period'):
+                capture_component= ET.SubElement(period,'standard-capture-component')                        
+                target_gas = ET.SubElement(capture_component,'target-gas')
+                target_gas.text = "CO2_USA" 
+     
+    for period in root_share.findall('.//stub-technology/period'):
+        CO2 = ET.SubElement(period,'CO2')
+        CO2.attrib['name'] = "CO2_USA"
+    for CO2 in root_share.findall('.//technology/period/CO2'):
+        CO2.attrib['name'] = "CO2_USA"
+                    
+    tree_share.write(share_output_path + fert_output_name,encoding="UTF-8",xml_declaration=True) 
+    
+    
+def biomass_CO2_function(biomass_path,share_output_path, biomass_output_name, stop_year):
+    tree_share = ET.parse(biomass_path)
+    root_share = tree_share.getroot()
+            
+    for technology in root_share.findall('.//stub-technology'):
+        if "CCS" in technology.attrib['name'] :
+            for period in technology.findall('.//period'):
+                capture_component= ET.SubElement(period,'standard-capture-component')                        
+                target_gas = ET.SubElement(capture_component,'target-gas')
+                target_gas.text = "CO2_USA" 
+     
+    for period in root_share.findall('.//stub-technology/period'):
+        CO2 = ET.SubElement(period,'CO2')
+        CO2.attrib['name'] = "CO2_USA"
+        
+    for CO2 in root_share.findall('.//technology/period/CO2'):
+        CO2.attrib['name'] = "CO2_USA"
+                    
+    tree_share.write(share_output_path + biomass_output_name,encoding="UTF-8",xml_declaration=True) 
+    
+def distribution_CO2_function(distribution_path,share_output_path, distribution_output_name, stop_year):
+    tree_share = ET.parse(distribution_path)
+    root_share = tree_share.getroot()
+     
+    for tech in root_share.findall(".//region[@name='USA']//stub-technology"):
+        if tech.findall('.//period'):
+            for period in tech.findall('.//period'):
+                CO2 = ET.SubElement(period,'CO2')
+                CO2.attrib['name'] = "CO2_USA"
+                
+        else:
+            for year in np.arange(2015,2055,5):
+                period_year = ET.SubElement(tech,'period')
+                period_year.attrib['year'] = str(year)
+                CO2 = ET.SubElement(period_year,'CO2')
+                CO2.attrib['name'] = "CO2_USA"
+        
+                    
+    tree_share.write(share_output_path + distribution_output_name,encoding="UTF-8",xml_declaration=True) 
+    
+
+def DAC_CO2_function(dac_path,share_output_path, dac_output_name, stop_year):
+    tree_share = ET.parse(dac_path)
+    root_share = tree_share.getroot()
+     
+    for tech in root_share.findall(".//stub-technology"):
+        if tech.findall('.//period'):
+            for period in tech.findall('.//period'):
+                CO2 = ET.SubElement(period,'CO2')
+                CO2.attrib['name'] = "CO2_USA"
+                if tech.attrib['name'] != 'no DAC':
+                    capture_component= ET.SubElement(period,'standard-capture-component')                        
+                    target_gas = ET.SubElement(capture_component,'target-gas')
+                    target_gas.text = "CO2_USA" 
+                
+        else:
+            for year in np.arange(2015,2055,5):
+                period_year = ET.SubElement(tech,'period')
+                period_year.attrib['year'] = str(year)
+                CO2 = ET.SubElement(period_year,'CO2')
+                CO2.attrib['name'] = "CO2_USA"
+        
+                    
+    tree_share.write(share_output_path + dac_output_name,encoding="UTF-8",xml_declaration=True)     
+    
+#%% change the cost of ele
+def elec_capital_function(elec_path,elec_output_path, technology_cost, start_year, stop_year):
+        
+    tree_capital = ET.parse(elec_path)
+    root_capital = tree_capital.getroot()
+    
+    technology_list=technology_cost.technology
+
+    for parent in root_capital.findall(".//location-info"):
+        tech_name = parent.attrib['subsector-name'] 
+        if tech_name in technology_list.values:
+            print(tech_name)
+            for period in parent.findall('.//period'):
+                year = int(period.attrib['year'])
+                if (year<start_year) | (year>stop_year) :
+                    continue
+                else:
+                    for capital_overnight in period.findall("input-capital[@name='capital']/capital-overnight"):
+                       #print(capital_overnight.text)
+                       new_capital_overnight = int(technology_cost.loc[technology_cost.technology==tech_name ,year])
+                       capital_overnight.text=str(new_capital_overnight)
+                       #print(year,capital_overnight.text)
+                
+        else:
+            continue
+        
+    for subsector in root_capital.findall(".//nesting-subsector[@name='coal']/subsector"):
+        name = subsector.attrib['name']
+        if '-' in name: 
+            print(name)
+            for half in subsector.findall('.//half-life'):
+                life = int(half.text)-10
+                half.text = str(life)
+                #print(half.text)
+        else:
+            continue
+            
+                    
+    tree_capital.write(elec_output_path +".xml",encoding="UTF-8",xml_declaration=True) 
