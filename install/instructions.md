@@ -106,7 +106,9 @@ Code Example with path in cluster:
 
 cd ~/hk6262/work/GCAM/libs
 wget https://github.com/uxlfoundation/oneTBB/archive/refs/tags/v2022.0.0.tar.gz 
+
 tar -zxf oneTBB-2022.0.0.tar.gz
+
 mv oneTBB-2022.0.0 tbb
 
 
@@ -175,8 +177,11 @@ source .bashrc
 7. Build GCAM
 
 cd ~/hk6264/work/GCAM/gcam-core-gcam-v6.0/cvs/objects/build/linux
+
 make clean
+
 make gcam -j 8
+
 
 Common error:
 Error:
