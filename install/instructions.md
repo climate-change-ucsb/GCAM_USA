@@ -69,7 +69,7 @@ cd ../libs/boost-lib
 
 ./b2 stage
 
-**3. Build Eigen **
+**3. Build Eigen**
 
 Code Example with path in cluster: 
 
@@ -82,7 +82,7 @@ tar -zxf eigen-master.tar.gz
 
 mv eigen-master ../libs/eigen
 
-4. Build Hector (2.5.0)
+**4. Build Hector (2.5.0)**
 
 Code Example with path in cluster: 
 
@@ -94,13 +94,13 @@ unzip v2.5.0.zip or unzip rcmip-tier1.zip
 
 rename hector2.5.0 to hector:
 
+rm -rf hector
+
 mv hector-rcmip-tier1 hector
-#mv hector-rcmip-tier1/* .
-#rm -rf hector-rcmip-tier1
 
 suggestions: try v3.2.0.zip
 
-4b. Build TBB
+**4b. Build TBB**
 
 Code Example with path in cluster: 
 
@@ -113,7 +113,7 @@ tar -zxf oneTBB-2022.0.0.tar.gz
 mv oneTBB-2022.0.0 tbb
 
 
-5. Download Java and openjdk
+**5. Download Java and openjdk**
 
 Code Example with path in cluster: 
 
@@ -132,7 +132,7 @@ wget https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca
 tar -zxf openjdk-22.0.1_linux-x64_bin.tar.gz
 
 
-6. Compiling
+**6. Compiling**
 
 Code Example with path in cluster: 
 
@@ -175,7 +175,7 @@ export CXXFLAGS="-I home/hk6264 /work/GCAM /xercesc/include"
 source .bashrc
 
 
-7. Build GCAM
+**7. Build GCAM**
 
 cd ~/hk6264/work/GCAM/gcam-core-gcam-v6.0/cvs/objects/build/linux
 
@@ -185,6 +185,7 @@ make gcam -j 8
 
 
 Common error:
+
 Error:
 In file included from manage_state_variables.cpp:44:
 ../../../util/base/include/manage_state_variables.hpp:114:5: error: 'uint64_t' does not name a type
@@ -205,7 +206,7 @@ See https://docs.google.com/document/d/1sJJgvWVmH2558JtqxEy9CilCv62hOQ2tgPmrPUcD
 
 for the last part
 
-8. Run model
+**8. Run model**
 
 #!/bin/bash
 
@@ -236,6 +237,7 @@ module load boost/1.85.0
 module load java/11
 
 # Set environment variables
+
 export GCAM_HOME=~/hk6264/work/GCAM/gcam-core-gcam-v6.0
 
 export EIGEN_INCLUDE=$GCAM_HOME/libs/eigen
