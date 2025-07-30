@@ -74,8 +74,12 @@ cd ../libs/boost-lib
 Code Example with path in cluster: 
 
 cd ~/hk6264/work/GCAM/build
+
+
 wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
+
 tar -zxf eigen-master.tar.gz
+
 mv eigen-master ../libs/eigen
 
 4. Build Hector (2.5.0)
@@ -111,38 +115,60 @@ mv oneTBB-2022.0.0 tbb
 Code Example with path in cluster: 
 
 cd ~/hk6264/work/GCAM/libs
+
 wget https://github.com/JGCRI/modelinterface/releases/download/v5.1/jars.zip
+
 unzip jars.zip
 
 Code Example with path in cluster: 
 
 cd ~/hk6264/work/GCAM/libs
+
 wget https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca4/8/GPL/openjdk-22.0.1_linux-x64_bin.tar.gz
+
 tar -zxf openjdk-22.0.1_linux-x64_bin.tar.gz
 
 
 6. Compiling
 
 Code Example with path in cluster: 
+
 cd ~/hk6264/work_1/GCAM
+
 cd ~/hk6264/work/GCAM
+
 vi .bashrc
 
 export CXX="g++" 
+
 export GCAM_HOME=${HOME}/hk6264/work/GCAM
+
 export GCAMLIB_HOME=${GCAM_HOME}/libs 
+
 export BOOST_INCLUDE=${GCAMLIB_HOME}/boost-lib
+
 export BOOST_LIB=${GCAMLIB_HOME}/boost-lib/stage/lib/
+
 export JAVA_INCLUDE=${GCAMLIB_HOME}/jdk-22.0.1/include
+
 export JAVA_LIB=${GCAMLIB_HOME}/jdk-22.0.1/lib/server
+
 export JARS_LIB=${GCAMLIB_HOME}/jars/*
+
 export EIGEN_INCLUDE=${GCAMLIB_HOME}/eigen
+
 export TBB_INCLUDE=${HOME}/libs/tbb/include
+
 export TBB_LIB=${HOME}/libs/tbb/lib
+
 export USE_GCAM_PARALLEL=0
+
 export PATH=$HOME/xerces-c/bin:$PATH
+
 export LD_LIBRARY_PATH=$HOME/xerces-c/lib:$LD_LIBRARY_PATH
+
 export CXXFLAGS="-I home/hk6264 /work/GCAM /xercesc/include"
+
 source .bashrc
 
 
