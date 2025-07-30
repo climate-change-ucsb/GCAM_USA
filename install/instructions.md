@@ -105,6 +105,7 @@ suggestions: try v3.2.0.zip
 Code Example with path in cluster: 
 
 cd ~/hk6262/work/GCAM/libs
+
 wget https://github.com/uxlfoundation/oneTBB/archive/refs/tags/v2022.0.0.tar.gz 
 
 tar -zxf oneTBB-2022.0.0.tar.gz
@@ -190,44 +191,65 @@ In file included from manage_state_variables.cpp:44:
   114 |     uint64_t mNumCollected;
 
 Solution: 
+
 cd gcam-core-gcam-v6.0/cvs/objects/util/base/include
+
 vi manage_state_variables : 
+
 add #include <stdint.h> at line 50.
 
 
 May need: make xml. or copy xml (the same GCAM version) to input/gcamdata/
+
 See https://docs.google.com/document/d/1sJJgvWVmH2558JtqxEy9CilCv62hOQ2tgPmrPUcDWQU/edit?usp=sharing
+
 for the last part
 
 8. Run model
 
 #!/bin/bash
+
 #SBATCH --job-name=gcam_run           # Job name
+
 #SBATCH --nodes=1                    # Number of nodes
+
 #SBATCH --ntasks=1                   # Number of tasks
+
 #SBATCH --cpus-per-task=1            # Number of CPU cores per task
+
 #SBATCH --mem=16G                     # Memory per node
+
 #SBATCH --time=02:00:00              # Time limit (HH:MM:SS)
+
 #SBATCH --output=gcam_output.log     # Standard output log
+
 #SBATCH --error=gcam_error.log       # Standard error log
 
 # Load necessary modules
-module purge
-module load gcc-toolset/13
-module load boost/1.85.0
-module load java/11
 
+module purge
+
+module load gcc-toolset/13
+
+module load boost/1.85.0
+
+module load java/11
 
 # Set environment variables
 export GCAM_HOME=~/hk6264/work/GCAM/gcam-core-gcam-v6.0
+
 export EIGEN_INCLUDE=$GCAM_HOME/libs/eigen
+
 export BOOST_LIB=$GCAM_HOME/libs/boost-lib/stage/lib
+
 export LD_LIBRARY_PATH=/home/ee0338/GCAM/libs/boost-lib/stage/lib/:$LD_LIBRARY_PATH
 
 # Navigate to the executable directory
+
 cd $GCAM_HOME/exe
 
 # Run GCAM with the specified configuration file and output directory
+
 ./gcam.exe -C configuration_ref.xml 
 
 And 
