@@ -52,13 +52,21 @@ Code Example with path in cluster:
 
 cd ~/hk6264/work/GCAM
 mkdir build
+
 mkdir libs
+
 cd build
+
 wget https://archives.boost.io/release/1.78.0/source/boost_1_78_0.tar.bz2
+
 tar --bzip2 -xf ./boost_1_78_0.tar.bz2
+
 mv boost_1_78_0 ../libs/boost-lib
+
 cd ../libs/boost-lib
+
 ./bootstrap.sh --with-libraries=system,filesystem --prefix=~/work/GCAM/libs/boost-lib/stage/lib
+
 ./b2 stage
 
 3. Build Eigen 
@@ -75,12 +83,17 @@ mv eigen-master ../libs/eigen
 Code Example with path in cluster: 
 
 cd ~/hk6264/work/GCAM/gcam-core-gcam-v6.0/cvs/objects/climate/source
+
 wget https://github.com/JGCRI/hector/archive/refs/tags/v2.5.0.zip
+
 unzip v2.5.0.zip or unzip rcmip-tier1.zip
+
 rename hector2.5.0 to hector:
+
 mv hector-rcmip-tier1 hector
 #mv hector-rcmip-tier1/* .
 #rm -rf hector-rcmip-tier1
+
 suggestions: try v3.2.0.zip
 
 4b. Build TBB
