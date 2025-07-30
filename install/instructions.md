@@ -1,6 +1,6 @@
-**GCAM Install guideline for Princeton Cluster
-**
-Preparing for Della Cluster:
+**GCAM Install guideline for Princeton Cluster**
+
+**Preparing for Della Cluster**:
 
 Install Princeton VPN (Be connected before using Princeton Cluster) 
 
@@ -10,7 +10,7 @@ Link to login Della Cluster:
 
 https://mydella.princeton.edu/
 
-1. Load the necessary modules
+**1. Load the necessary modules**
 
 Please make sure that you have loaded this module before compiling. 
 
@@ -28,7 +28,7 @@ module list (To check the module is loaded successfully)
 
 may need to check with, e.g., module avail gcc-toolset
 
-2. Download GCAM:
+**2. Download GCAM:**
 
 Code Example with path in cluster: 
 
@@ -46,7 +46,7 @@ echo $CC
 
 
 
-2. Build Boost 
+**2. Build Boost** 
 
 Code Example with path in cluster: 
 
@@ -69,7 +69,7 @@ cd ../libs/boost-lib
 
 ./b2 stage
 
-3. Build Eigen 
+**3. Build Eigen **
 
 Code Example with path in cluster: 
 
