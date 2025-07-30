@@ -15,10 +15,15 @@ https://mydella.princeton.edu/
 Please make sure that you have loaded this module before compiling. 
 
 module load gcc-toolset/13 or 14
+
 module load intel/2024.0.2
+
 module load cmake/3.18.2
+
 module load java/11
+
 module load intel-tbb/2021.11
+
 module list (To check the module is loaded successfully)
 
 may need to check with, e.g., module avail gcc-toolset
@@ -28,10 +33,15 @@ may need to check with, e.g., module avail gcc-toolset
 Code Example with path in cluster: 
 
 cd ~/hk6264/work
+
 mkdir GCAM
+
 cd GCAM
+
 wget https://github.com/JGCRI/gcam-core/archive/refs/tags/gcam-v8.2.zip
+
 unzip gcam-v8.2.zip
+
 echo $CC
 
 
