@@ -30,8 +30,8 @@ Code Example with path in cluster:
 cd ~/hk6264/work
 mkdir GCAM
 cd GCAM
-wget https://github.com/JGCRI/gcam-core/archive/refs/tags/gcam-v6.0.zip
-unzip gcam-v6.0.zip
+wget https://github.com/JGCRI/gcam-core/archive/refs/tags/gcam-v8.2.zip
+unzip gcam-v8.2.zip
 echo $CC
 
 
